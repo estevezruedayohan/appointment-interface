@@ -5,20 +5,28 @@ import Search from "./components/Search";
 import AddAppointment from "./components/AddAppointment";
 import AppointmentInfo from "./components/AppointmentInfo";
 
-function App() {
-  let [appointmentList, setAppointmentList] = useState([]);
+export default function App() {
+  const [appointmentList, setAppointmentList] = useState([]);
 
-  const fetchData = useCallback(() => {
-    fetch("./data.json")
-      .then((response) => response.json())
-      .then((data) => {
-        setAppointmentList(data);
-      });
+  const deleteAppointment = useCallback((appointmentId) => {
+    setAppointmentList((prevList) =>
+      prevList.filter((appointment) => appointment.id !== appointmentId),
+    );
   }, []);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("./data1.json");
+        const data = await response.json();
+        setAppointmentList(data);
+      } catch (error) {
+        console.error("Error loading the data: ", error);
+      }
+    };
+
     fetchData();
-  }, [fetchData]);
+  }, []);
 
   return (
     <div className="App container mx-auto mt-3 font-thin">
@@ -29,12 +37,20 @@ function App() {
       <AddAppointment />
       <Search />
       <ul className="divide-y divide-gray-200">
-        {appointmentList.map((appointment) => (
-          <AppointmentInfo key={appointment.id} appointment={appointment} />
-        ))}
+        {appointmentList.length === 0 ? (
+          <p className="text-center py-10 text-gray-500 italic">
+            There are no pending appointments. ¡Day Off! 🐨
+          </p>
+        ) : (
+          appointmentList.map((appointment) => (
+            <AppointmentInfo
+              key={appointment.id}
+              appointment={appointment}
+              onDeleteAppointment={deleteAppointment}
+            />
+          ))
+        )}
       </ul>
     </div>
   );
 }
-
-export default App;
