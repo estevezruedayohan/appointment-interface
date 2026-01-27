@@ -1,19 +1,17 @@
-import { useState } from "react";
 import "./App.css";
-import { HiHeart, HiLightningBolt } from "react-icons/hi";
+import { BiCalendar } from "react-icons/bi";
 import Search from "./components/Search";
+import AddAppointment from "./components/AddAppointment";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <div className="App container mx-auto mt-3 font-thin">
-      <h1 className="text-5xl">
-        <HiHeart className="inline-block animate-pulse text-sky-800" />
-        Vite + Tailwind v4 Working!
-        <HiLightningBolt className="inline-block animate-pulse text-yellow-400" />
+      <h1 className="text-5xl mb-3">
+        <BiCalendar className="inline-block text-red-400" />
+        Your Appointments
       </h1>
-      <Search></Search>
+      <AddAppointment />
+      <Search />
     </div>
   );
 }

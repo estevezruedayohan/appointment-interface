@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function Search() {
   const [toggle, setToggle] = useState(false);
   return (
-    <div className="mt-5 flex items-center w-full max-w-md mx-auto">
+    <div className="flex items-center w-full max-w-md mx-auto mb-3 mt-3">
       <div className="flex w-full border border-zinc-700 bg-neutral-200 rounded-xl focus-within:ring-2 focus-within:ring-sky-500">
         <div className="flex items-center justify-center pl-4 text-zinc-400">
           <BiSearch size={20} />
@@ -15,7 +15,7 @@ export default function Search() {
           type="text"
           name="query"
           id="query"
-          className="w-full rounded-l-xl px-4 py-3 bg-transparent text-white outline-none placeholder:text-zinc-500"
+          className="w-full rounded-l-xl px-4 py-3 bg-transparent text-zinc-800 outline-none placeholder:text-zinc-500"
           placeholder="Search"
         />
         <div className="relative">
