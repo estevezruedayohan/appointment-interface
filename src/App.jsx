@@ -2,7 +2,7 @@ import "./App.css";
 import { BiCalendar } from "react-icons/bi";
 import Search from "./components/Search";
 import AddAppointment from "./components/AddAppointment";
-import appointmentList from "./data.json";
+import appointmentList from "../public/data.json";
 import AppointmentInfo from "./components/AppointmentInfo";
 
 function App() {

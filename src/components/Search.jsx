@@ -3,7 +3,7 @@ import DropDown from "./DropDown";
 import { useState } from "react";
 
 export default function Search() {
-  const [toggle, setToggle] = useState(false);
+  const [toggleSort, setToggleSort] = useState(false);
   return (
     <div className="flex items-center w-full max-w-md mx-auto mb-3 mt-3">
       <div className="flex w-full border border-zinc-700 bg-neutral-200 rounded-xl focus-within:ring-2 focus-within:ring-sky-500">
@@ -20,7 +20,7 @@ export default function Search() {
         />
         <div className="relative">
           <button
-            onClick={() => setToggle(!toggle)}
+            onClick={() => setToggleSort(!toggleSort)}
             type="button"
             className="flex items-center whitespace-nowrap rounded-r-xl gap-1 px-4 py-3 border-l border-zinc-700 bg-blue-700/50 text-zinc-300 hover:bg-blue-700 transition-colors"
             id="options-menu"
@@ -30,11 +30,11 @@ export default function Search() {
             <span>Sort By</span>
             <BiCaretDown className="ml-2" />
           </button>
-          {toggle && (
+          {toggleSort && (
             <>
               <div
                 className="fixed inset-0 z-40"
-                onClick={() => setToggle(false)}
+                onClick={() => setToggleSort(false)}
               ></div>
               <div className="relative z-50">
                 <DropDown />
