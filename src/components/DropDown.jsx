@@ -2,7 +2,8 @@ import { BiCheck } from "react-icons/bi";
 // import { useState } from "react";
 
 export default function DropDown() {
-  // const [ toggleSort, setToggleSort ] = useState(false)
+  // const [toggleSort, setToggleSort] = useState(false);
+
   return (
     <div
       className="absolute right-0 mt-2 w-56 origin-top-right
@@ -18,7 +19,7 @@ export default function DropDown() {
           className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer"
           role="menuitem"
         >
-          Pet Name <BiCheck />{" "}
+          Pet Name <BiCheck />
         </div>
         <div
           className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer"

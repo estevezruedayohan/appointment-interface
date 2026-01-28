@@ -1,12 +1,18 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import "./App.css";
 import { BiCalendar } from "react-icons/bi";
 import Search from "./components/Search";
 import AddAppointment from "./components/AddAppointment";
 import AppointmentInfo from "./components/AppointmentInfo";
+import { filterAppointments } from "./utils/filterTools";
 
 export default function App() {
   const [appointmentList, setAppointmentList] = useState([]);
+  const [query, setQuery] = useState("");
+
+  const filteredAppointments = useMemo(() => {
+    return filterAppointments(appointmentList, query);
+  }, [appointmentList, query]);
 
   const deleteAppointment = useCallback((appointmentId) => {
     setAppointmentList((prevList) =>
@@ -17,7 +23,7 @@ export default function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("./data1.json");
+        const response = await fetch("./data.json");
         const data = await response.json();
         setAppointmentList(data);
       } catch (error) {
@@ -35,14 +41,17 @@ export default function App() {
         Your Appointments
       </h1>
       <AddAppointment />
-      <Search />
+      <Search
+        searchTerm={query}
+        onQueryChange={(myQuery) => setQuery(myQuery)}
+      />
       <ul className="divide-y divide-gray-200">
         {appointmentList.length === 0 ? (
           <p className="text-center py-10 text-gray-500 italic">
             There are no pending appointments. ¡Day Off! 🐨
           </p>
         ) : (
-          appointmentList.map((appointment) => (
+          filteredAppointments.map((appointment) => (
             <AppointmentInfo
               key={appointment.id}
               appointment={appointment}

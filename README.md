@@ -14,3 +14,23 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+### Explanation
+
+graph TD
+subgraph "CHILD COMPONENT (Search.jsx)"
+A[User writes 'Fido'] --> B("onChange={(event)}")
+B --> C["onQueryChange('Fido')"]
+end
+
+    C -- "Load the dato (Lifting State Up)" --> D
+
+    subgraph "PARENT COMPONENT (App.jsx)"
+    D["(myQuery) => setQuery(myQuery)"] --> E["State query = 'Fido'"]
+    E --> F{"¿Changed query?"}
+    F -- SI --> G["useMemo() execute filterAppointments"]
+    G --> H["filteredAppointments gets update"]
+    H --> I["filteredAppointments.map(...)"]
+    end
+
+    I -- "Download the dato (Props)" --> J["AppointmentInfo (Only 'Fido')"]
