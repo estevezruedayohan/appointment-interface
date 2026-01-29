@@ -9,10 +9,12 @@ import { filterAppointments } from "./utils/filterTools";
 export default function App() {
   const [appointmentList, setAppointmentList] = useState([]);
   const [query, setQuery] = useState("");
+  const [sortBy, setSortBy] = useState("petName");
+  const [orderBy, setOrderBy] = useState("asc");
 
   const filteredAppointments = useMemo(() => {
-    return filterAppointments(appointmentList, query);
-  }, [appointmentList, query]);
+    return filterAppointments(appointmentList, query, sortBy, orderBy);
+  }, [appointmentList, query, sortBy, orderBy]);
 
   const deleteAppointment = useCallback((appointmentId) => {
     setAppointmentList((prevList) =>
@@ -44,6 +46,10 @@ export default function App() {
       <Search
         searchTerm={query}
         onQueryChange={(myQuery) => setQuery(myQuery)}
+        sortBy={sortBy}
+        onSortByChange={(mySort) => setSortBy(mySort)}
+        orderBy={orderBy}
+        onOrderByChange={(myOrder) => setOrderBy(myOrder)}
       />
       <ul className="divide-y divide-gray-200">
         {appointmentList.length === 0 ? (

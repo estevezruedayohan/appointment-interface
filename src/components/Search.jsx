@@ -2,7 +2,14 @@ import { BiSearch, BiCaretDown } from "react-icons/bi";
 import DropDown from "./DropDown";
 import { useState } from "react";
 
-export default function Search({ searchTerm, onQueryChange }) {
+export default function Search({
+  searchTerm,
+  onQueryChange,
+  sortBy,
+  onSortByChange,
+  orderBy,
+  onOrderByChange,
+}) {
   const [toggleSort, setToggleSort] = useState(false);
   return (
     <div className="flex items-center w-full max-w-md mx-auto mb-3 mt-3">
@@ -41,7 +48,12 @@ export default function Search({ searchTerm, onQueryChange }) {
                 onClick={() => setToggleSort(false)}
               ></div>
               <div className="relative z-50">
-                <DropDown />
+                <DropDown
+                  sortBy={sortBy}
+                  onSortByChange={onSortByChange}
+                  orderBy={orderBy}
+                  onOrderByChange={onOrderByChange}
+                />
               </div>
             </>
           )}
