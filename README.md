@@ -35,11 +35,9 @@ end
 
     I -- "Download the dato (Props)" --> J["AppointmentInfo (Only 'Fido')"]
 
-## TODO:Para terminar de cerrar este ciclo de aprendizaje, ¿te gustaría que implementemos ahora el sistema de ordenamiento (Sort By)?
+## TODO:
 
-Ya tienes el botón y el DropDown en tu código, solo nos falta:
-Crear un estado para el criterio de orden (ej. por nombre, por fecha).
-Crear un estado para la dirección (ascendente o descendente).
-Ajustar nuestra herramienta filterTools.js para que, además de filtrar, ordene los resultados antes de mostrarlos.
-
-¿Te gustaría que mañana empecemos directamente modificando la función en filterTools.js o prefieres que revisemos primero el estado del DropDown?
+- ¿Mañana quieres que analicemos si ese Search debería ser un "Componente Controlado" o si prefieres saltar directo a guardar los datos en el navegador? ¡Hasta mañana!
+- Move deleteAppointment to filterTools.js or different file for logic exclusively
+- learn more about deleteAppointment and its logic
+- Learn how the reduce method works app.jsx line 47
