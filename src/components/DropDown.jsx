@@ -6,6 +6,20 @@ export default function DropDown({
   orderBy,
   onOrderByChange,
 }) {
+  const sortOptions = [
+    { id: "petName", label: "Pet Name" },
+    { id: "ownerName", label: "Owner Name" },
+    { id: "aptDate", label: "Date" },
+  ];
+
+  const orderOptions = [
+    { id: "asc", label: "Asc" },
+    { id: "desc", label: "Desc" },
+  ];
+
+  const itemClass =
+    "px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer";
+
   return (
     <div
       className="absolute right-0 mt-2 w-56 origin-top-right
@@ -17,41 +31,26 @@ export default function DropDown({
         aria-orientation="vertical"
         aria-labelledby="options-menu"
       >
-        <div
-          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer"
-          role="menuitem"
-          onClick={() => onSortByChange("petName")}
-        >
-          Pet Name {sortBy === "petName" && <BiCheck />}
-        </div>
-        <div
-          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer"
-          role="menuitem"
-          onClick={() => onSortByChange("ownerName")}
-        >
-          Owner Name {sortBy === "ownerName" && <BiCheck />}
-        </div>
-        <div
-          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer"
-          role="menuitem"
-          onClick={() => onSortByChange("aptDate")}
-        >
-          Date {sortBy === "aptDate" && <BiCheck />}
-        </div>
-        <div
-          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer border-gray-1 border-t-2"
-          role="menuitem"
-          onClick={() => onOrderByChange("asc")}
-        >
-          Asc {orderBy === "asc" && <BiCheck />}
-        </div>
-        <div
-          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer"
-          role="menuitem"
-          onClick={() => onOrderByChange("desc")}
-        >
-          Desc {orderBy === "desc" && <BiCheck />}
-        </div>
+        {sortOptions.map((option) => (
+          <div
+            key={option.id}
+            className={itemClass}
+            role="menuitem"
+            onClick={() => onSortByChange(option.id)}
+          >
+            {option.label} {sortBy === option.id && <BiCheck />}
+          </div>
+        ))}
+        {orderOptions.map((option) => (
+          <div
+            key={option.id}
+            className={itemClass}
+            role="menuitem"
+            onClick={() => onOrderByChange(option.id)}
+          >
+            {option.label} {orderBy === option.id && <BiCheck />}
+          </div>
+        ))}
       </div>
     </div>
   );
