@@ -42,3 +42,4 @@ end
 - learn more about deleteAppointment and its logic
 - Learn how the reduce method works app.jsx line 47
 - Para verificar cómo manejar el estado de forma eficiente, te recomiendo revisar la guía de Escalar la lógica de estado en React.
+  max-w-7xl mx-auto p-8 text-center min-h-screen

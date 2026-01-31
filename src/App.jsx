@@ -37,9 +37,9 @@ export default function App() {
   }, []);
 
   return (
-    <div className="App container mx-auto mt-3 font-thin">
+    <div className="w-full max-w-7xl mx-auto mt-3 p-8 text-center font-thin min-h-dvh pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
       <h1 className="text-5xl mb-3">
-        <BiCalendar className="inline-block text-red-400" />
+        <BiCalendar className="inline-block text-red-400 align-top" />
         Your Appointments
       </h1>
       <AddAppointment
