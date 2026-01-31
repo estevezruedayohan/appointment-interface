@@ -1,5 +1,5 @@
 export const filterAppointments = (list, searchTerm, sortBy, orderBy) => {
-  
+
   const filtered = list.filter((item) => {
     return (
       item.petName.toLowerCase().includes(searchTerm.toLowerCase()) ||

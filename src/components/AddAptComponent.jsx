@@ -1,7 +1,7 @@
 import { BiCalendarPlus } from "react-icons/bi";
 import { useState } from "react";
 
-export default function AddAppointment({ onSendAppointment, lastId }) {
+export default function AddAptComponent({ onSendAppointment }) {
   const clearData = {
     ownerName: "",
     petName: "",
@@ -22,7 +22,6 @@ export default function AddAppointment({ onSendAppointment, lastId }) {
 
   function formDataPublish() {
     const appointmentInfo = {
-      id: lastId + 1,
       ownerName: formData.ownerName,
       petName: formData.petName,
       aptDate: `${formData.aptDate} ${formData.aptTime}`,

@@ -1,11 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { filterAppointments } from "../utils/filterTools"
 
 export function useAppointments(){
 
   const [ appointmentList, setAppointmentList] = useState(() => {
-    const localData = localStorage.getItem("appointments")
-    return localData ? JSON.parse(localData) : []
+    try {
+      const localData = localStorage.getItem("appointments")
+      
+      return localData ? JSON.parse(localData) : []
+    } catch {
+      return []
+    }
   });
+
+  const [query, setQuery] = useState("");
+  const [sortBy, setSortBy] = useState("petName");
+  const [orderBy, setOrderBy] = useState("asc");
+  
+  const filteredAppointments = useMemo(() => {
+    return filterAppointments(appointmentList || [], query, sortBy, orderBy);
+  }, [appointmentList, query, sortBy, orderBy]);
 
   useEffect(() => {
     if (appointmentList.length === 0) {
@@ -29,9 +43,19 @@ export function useAppointments(){
     localStorage.setItem("appointments", JSON.stringify(appointmentList))
   }, [appointmentList])
 
-  const AddAppointment = (apt) => setAppointmentList(prev => [...prev, apt])
-  const deleteAppointment = (aptId) => setAppointmentList( prev => prev.filter( a => a.id !== aptId))
+  const addAppointment = (apt) => {
+    const nextId = appointmentList.reduce(
+      (max, item) => (Number(item.id) > max ? Number(item.id) : max),
+          0,
+    ) + 1;
+    
+    const newApt = {...apt, id: nextId} 
 
-  return { appointmentList, setAppointmentList, AddAppointment, deleteAppointment }
+    setAppointmentList(prev => [...prev, newApt])
+  }
+  
+  const deleteAppointment = (aptId) => setAppointmentList( prev => prev.filter( a => a.id !== aptId))
+ 
+  return { appointmentList: filteredAppointments, query, setQuery, sortBy, setSortBy, orderBy, setOrderBy, setAppointmentList, addAppointment, deleteAppointment }
 
 }

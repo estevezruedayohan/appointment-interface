@@ -1,40 +1,22 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
 import "./App.css";
 import { BiCalendar } from "react-icons/bi";
 import Search from "./components/Search";
-import AddAppointment from "./components/AddAppointment";
+import AddAptComponent from "./components/AddAptComponent";
 import AppointmentInfo from "./components/AppointmentInfo";
-import { filterAppointments } from "./utils/filterTools";
+import { useAppointments } from "./hooks/useAppointments";
 
 export default function App() {
-  const [appointmentList, setAppointmentList] = useState([]);
-  const [query, setQuery] = useState("");
-  const [sortBy, setSortBy] = useState("petName");
-  const [orderBy, setOrderBy] = useState("asc");
-
-  const filteredAppointments = useMemo(() => {
-    return filterAppointments(appointmentList, query, sortBy, orderBy);
-  }, [appointmentList, query, sortBy, orderBy]);
-
-  const deleteAppointment = useCallback((appointmentId) => {
-    setAppointmentList((prevList) =>
-      prevList.filter((appointment) => appointment.id !== appointmentId),
-    );
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("./data.json");
-        const data = await response.json();
-        setAppointmentList(data);
-      } catch (error) {
-        console.error("Error loading the data: ", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const {
+    appointmentList,
+    query,
+    setQuery,
+    sortBy,
+    setSortBy,
+    orderBy,
+    setOrderBy,
+    addAppointment,
+    deleteAppointment,
+  } = useAppointments();
 
   return (
     <div className="w-full max-w-7xl mx-auto mt-3 p-8 text-center font-thin min-h-dvh pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
@@ -42,22 +24,14 @@ export default function App() {
         <BiCalendar className="inline-block text-red-400 align-top" />
         Your Appointments
       </h1>
-      <AddAppointment
-        onSendAppointment={(myAppointment) =>
-          setAppointmentList([...appointmentList, myAppointment])
-        }
-        lastId={appointmentList.reduce(
-          (max, item) => (Number(item.id) > max ? Number(item.id) : max),
-          0,
-        )}
-      />
+      <AddAptComponent onSendAppointment={addAppointment} />
       <Search
         searchTerm={query}
-        onQueryChange={(myQuery) => setQuery(myQuery)}
+        onQueryChange={setQuery}
         sortBy={sortBy}
-        onSortByChange={(mySort) => setSortBy(mySort)}
+        onSortByChange={setSortBy}
         orderBy={orderBy}
-        onOrderByChange={(myOrder) => setOrderBy(myOrder)}
+        onOrderByChange={setOrderBy}
       />
       <ul className="divide-y divide-gray-200">
         {appointmentList.length === 0 ? (
@@ -65,7 +39,7 @@ export default function App() {
             There are no pending appointments. ¡Day Off! 🐨
           </p>
         ) : (
-          filteredAppointments.map((appointment) => (
+          appointmentList.map((appointment) => (
             <AppointmentInfo
               key={appointment.id}
               appointment={appointment}
