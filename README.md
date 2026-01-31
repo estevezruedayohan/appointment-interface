@@ -41,3 +41,4 @@ end
 - Move deleteAppointment to filterTools.js or different file for logic exclusively
 - learn more about deleteAppointment and its logic
 - Learn how the reduce method works app.jsx line 47
+- Para verificar cómo manejar el estado de forma eficiente, te recomiendo revisar la guía de Escalar la lógica de estado en React.
