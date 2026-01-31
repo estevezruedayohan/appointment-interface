@@ -11,12 +11,27 @@ export default function Search({
   onOrderByChange,
 }) {
   const [toggleSort, setToggleSort] = useState(false);
+
+  const handleSortChange = (newSort) => {
+    onSortByChange(newSort);
+    setToggleSort(false);
+  };
+
+  const handleOrderChange = (newOrder) => {
+    onOrderByChange(newOrder);
+    setToggleSort(false);
+  };
+
   return (
     <div className="flex items-center w-full max-w-md mx-auto mb-3 mt-3">
       <div className="flex w-full border border-zinc-700 bg-neutral-200 rounded-xl focus-within:ring-2 focus-within:ring-sky-500">
         <div className="flex items-center justify-center pl-4 text-zinc-400">
           <BiSearch size={20} />
-          <label htmlFor="query" className="sr-only" />
+          <label
+            htmlFor="query"
+            className="sr-only"
+            aria-label="Search appointment"
+          />
         </div>
         <input
           type="text"
@@ -36,7 +51,7 @@ export default function Search({
             className="flex items-center whitespace-nowrap rounded-r-xl gap-1 px-4 py-3 border-l border-zinc-700 bg-blue-700/50 text-zinc-300 hover:bg-blue-700 transition-colors"
             id="options-menu"
             aria-haspopup="true"
-            aria-expanded="true"
+            aria-expanded={toggleSort}
           >
             <span>Sort By</span>
             <BiCaretDown className="ml-2" />
@@ -50,9 +65,9 @@ export default function Search({
               <div className="relative z-50">
                 <DropDown
                   sortBy={sortBy}
-                  onSortByChange={onSortByChange}
+                  onSortByChange={handleSortChange}
                   orderBy={orderBy}
-                  onOrderByChange={onOrderByChange}
+                  onOrderByChange={handleOrderChange}
                 />
               </div>
             </>
