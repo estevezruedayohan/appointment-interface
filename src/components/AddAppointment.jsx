@@ -12,17 +12,25 @@ export default function AddAppointment({ onSendAppointment, lastId }) {
   const [toggleForm, setToggleForm] = useState(false);
   const [formData, setFormData] = useState(clearData);
 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   function formDataPublish() {
     const appointmentInfo = {
       id: lastId + 1,
       ownerName: formData.ownerName,
       petName: formData.petName,
-      aptDate: formData.aptDate + " " + formData.aptTime,
+      aptDate: `${formData.aptDate} ${formData.aptTime}`,
       aptNotes: formData.aptNotes,
     };
     onSendAppointment(appointmentInfo);
     setFormData(clearData);
-    setToggleForm(!toggleForm);
+    setToggleForm(false);
   }
 
   return (
@@ -50,9 +58,7 @@ export default function AddAppointment({ onSendAppointment, lastId }) {
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2">
               <input
-                onChange={(event) => {
-                  setFormData({ ...formData, ownerName: event.target.value });
-                }}
+                onChange={handleInputChange}
                 value={formData.ownerName}
                 type="text"
                 name="ownerName"
@@ -71,9 +77,7 @@ export default function AddAppointment({ onSendAppointment, lastId }) {
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2">
               <input
-                onChange={(event) => {
-                  setFormData({ ...formData, petName: event.target.value });
-                }}
+                onChange={handleInputChange}
                 value={formData.petName}
                 type="text"
                 name="petName"
@@ -92,9 +96,7 @@ export default function AddAppointment({ onSendAppointment, lastId }) {
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2">
               <input
-                onChange={(event) => {
-                  setFormData({ ...formData, aptDate: event.target.value });
-                }}
+                onChange={handleInputChange}
                 value={formData.aptDate}
                 type="date"
                 name="aptDate"
@@ -113,9 +115,7 @@ export default function AddAppointment({ onSendAppointment, lastId }) {
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2">
               <input
-                onChange={(event) => {
-                  setFormData({ ...formData, aptTime: event.target.value });
-                }}
+                onChange={handleInputChange}
                 value={formData.aptTime}
                 type="time"
                 name="aptTime"
@@ -134,9 +134,7 @@ export default function AddAppointment({ onSendAppointment, lastId }) {
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2">
               <textarea
-                onChange={(event) => {
-                  setFormData({ ...formData, aptNotes: event.target.value });
-                }}
+                onChange={handleInputChange}
                 value={formData.aptNotes}
                 id="aptNotes"
                 name="aptNotes"
