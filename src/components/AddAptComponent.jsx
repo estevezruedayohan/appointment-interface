@@ -1,34 +1,27 @@
 import { BiCalendarPlus } from "react-icons/bi";
 import { useState } from "react";
+import { useForm } from "../hooks/useForm";
 
 export default function AddAptComponent({ onSendAppointment }) {
-  const clearData = {
+  const { formData, handleInputChange, resetForm } = useForm({
     ownerName: "",
     petName: "",
     aptDate: "",
     aptTime: "",
     aptNotes: "",
-  };
+  });
+
   const [toggleForm, setToggleForm] = useState(false);
-  const [formData, setFormData] = useState(clearData);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  function formDataPublish() {
+  function handleSubmit() {
+    if (!formData.ownerName || !formData.petName)
+      return alert("Please fill the names.");
     const appointmentInfo = {
-      ownerName: formData.ownerName,
-      petName: formData.petName,
+      ...formData,
       aptDate: `${formData.aptDate} ${formData.aptTime}`,
-      aptNotes: formData.aptNotes,
     };
     onSendAppointment(appointmentInfo);
-    setFormData(clearData);
+    resetForm();
     setToggleForm(false);
   }
 
@@ -147,7 +140,7 @@ export default function AddAptComponent({ onSendAppointment }) {
           <div className="pt-5">
             <div className="flex justify-end">
               <button
-                onClick={formDataPublish}
+                onClick={handleSubmit}
                 type="submit"
                 className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-400 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400"
               >
